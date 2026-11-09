@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#10162c">
+  <title>Box Brawl — Crate Simulator</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22><rect width=%2264%22 height=%2264%22 rx=%2214%22 fill=%22%23ff9b43%22/><path d=%22M32 10 38 25 54 26 42 37 46 53 32 44 18 53 22 37 10 26 26 25Z%22 fill=%22%23fff1a4%22/></svg>">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Box Brawl home">
+        <span class="brand-mark"><span>✦</span></span>
+        <span class="brand-copy"><strong>BOX <em>BRAWL</em></strong><small>CRATE SIMULATOR</small></span>
+      </a>
+      <div class="top-center"><span class="season-dot"></span> SEASON 08 <span class="top-divider">/</span> <b>STARR PARK</b></div>
+      <div class="wallet">
+        <div class="wallet-item"><span class="coin-icon">◆</span><strong id="coin-count">0</strong><button class="plus-btn" data-toast="Coins are earned from duplicates and quests!">+</button></div>
+        <div class="wallet-item gems"><span class="gem-icon">✦</span><strong id="gem-count">0</strong><button class="plus-btn" data-toast="Gems are just for show in this simulator.">+</button></div>
+        <button class="avatar" aria-label="Player profile">⚡</button>
+      </div>
+    </header>
+
+    <main class="layout">
+      <aside class="sidebar">
+        <div class="side-label">YOUR PARK</div>
+        <button class="nav-item active" data-view="home"><span class="nav-icon">▣</span><span>Box Station</span><span class="nav-arrow">›</span></button>
+        <button class="nav-item" data-view="collection"><span class="nav-icon">♟</span><span>Brawlers</span><span class="nav-count" id="brawler-nav-count">0</span></button>
+        <button class="nav-item" data-view="quests"><span class="nav-icon">⚑</span><span>Quests</span><span class="quest-dot"></span></button>
+        <div class="side-label side-label-spaced">QUICK STATS</div>
+        <div class="stats-card">
+          <div class="stat-row"><span>Boxes opened</span><b id="boxes-opened">0</b></div>
+          <div class="stat-row"><span>Best pull</span><b class="best-pull" id="best-pull">—</b></div>
+          <div class="stat-row"><span>Legendary luck</span><b class="luck-text" id="luck-stat">0 / 30</b></div>
+          <div class="luck-track"><i id="luck-fill"></i></div>
+        </div>
+        <div class="side-spacer"></div>
+        <div class="side-tip"><span class="tip-spark">✦</span><div><b>LUCKY STREAK</b><p>Every box brings you closer to a legendary!</p></div></div>
+        <div class="side-footer">BOX BRAWL <span>v1.0</span></div>
+      </aside>
+
+      <section class="main-area" id="main-area">
+        <div class="view home-view" id="home-view">
+          <div class="page-heading"><div><div class="eyebrow"><span class="eyebrow-line"></span> THE BOX STATION</div><h1>Ready to <span>unlock?</span></h1><p>Every box is a new adventure. What’s inside yours?</p></div><div class="open-total"><span class="tiny-star">✦</span> <strong id="header-open-count">0</strong><small>BOXES OPENED</small></div></div>
+          <div class="game-grid">
+            <div class="opening-column">
+              <div class="crate-stage" id="crate-stage">
+                <div class="stage-glow"></div><div class="stage-orbit orbit-one"></div><div class="stage-orbit orbit-two"></div>
+                <span class="float-star star-a">✦</span><span class="float-star star-b">✧</span><span class="float-star star-c">✦</span>
+                <div class="box-art mega-art" id="box-art" aria-label="A colorful brawl box">
+                  <div class="box-shadow"></div><div class="box-lid"><i></i></div><div class="box-body"><div class="box-stripe"></div><div class="box-lock"><span>★</span></div><div class="box-sticker">BB</div></div><div class="box-side"></div>
+                </div>
+                <div class="stage-caption"><span class="caption-kicker">YOUR NEXT DROP</span><strong id="stage-box-name">MEGA BOX</strong><span class="stage-subtitle" id="stage-box-desc">A huge haul of surprises</span></div>
+              </div>
+              <div class="open-controls"><button class="open-button" id="open-button"><span class="open-icon">✦</span><span>OPEN BOX</span><kbd>SPACE</kbd></button><button class="open-again" id="open-again" title="Open another box" aria-label="Open another box">↻</button></div>
+              <div class="box-tabs" id="box-tabs" role="tablist" aria-label="Choose a box"></div>
+              <div class="box-info"><span class="info-icon">ⓘ</span><span id="box-info-text">Contains coins, power points, and a chance to unlock a new brawler.</span><button id="odds-button">DROP RATES <span>↗</span></button></div>
+            </div>
+            <aside class="right-rail">
+              <div class="rail-card welcome-card"><div class="welcome-top"><span class="welcome-tag">WELCOME BACK</span><span class="sun-icon">☀</span></div><h2>Hey, <span>Brawler!</span></h2><p>Your next favorite is just one box away.</p><div class="welcome-progress"><div class="progress-copy"><span>STARR ROAD</span><b id="road-progress-label">0 / 8</b></div><div class="progress-bar"><i id="road-progress"></i></div><div class="progress-foot"><span>First steps</span><span>Keep going!</span></div></div></div>
+              <div class="rail-card collection-card"><div class="rail-title"><span>YOUR BRAWLERS</span><button class="text-link" data-view="collection">VIEW ALL ↗</button></div><div class="collection-count"><strong id="collection-count">0</strong><span> / 8<br>UNLOCKED</span><div class="mini-portraits" id="mini-portraits"></div></div><div class="collection-foot"><span class="rarity-dot rare-dot"></span>New brawlers are waiting inside!</div></div>
+              <div class="rail-card quest-card"><div class="quest-header"><span class="quest-emblem">⚑</span><div><b>DAILY QUEST</b><small>RESETS IN 12H 48M</small></div><span class="quest-pill">+<span id="quest-reward">40</span> <i>◆</i></span></div><p id="quest-text">Open 3 boxes</p><div class="quest-progress-row"><div class="progress-bar quest-progress"><i id="quest-progress"></i></div><span id="quest-progress-label">0 / 3</span></div><button class="quest-action" id="quest-action">KEEP OPENING <span>→</span></button></div>
+            </aside>
+          </div>
+          <div class="recent-row"><div class="recent-heading"><div><span class="eyebrow-line"></span><b>RECENT PULLS</b></div><span id="recent-note">Your latest box drops appear here</span></div><div class="recent-pulls" id="recent-pulls"><div class="empty-pull"><span>✧</span> Open a box to reveal your first drop!</div></div></div>
+        </div>
+        <div class="view collection-view hidden" id="collection-view"><div class="page-heading"><div><div class="eyebrow"><span class="eyebrow-line"></span> YOUR ROSTER</div><h1>Meet the <span>brawlers.</span></h1><p>Collect all 8 colorful contenders from Starr Park.</p></div><div class="roster-counter"><b id="roster-count">0</b><span>OF 8<br>COLLECTED</span></div></div><div class="roster-grid" id="roster-grid"></div><button class="back-home" data-view="home">← BACK TO BOX STATION</button></div>
+        <div class="view quests-view hidden" id="quests-view"><div class="page-heading"><div><div class="eyebrow"><span class="eyebrow-line"></span> PARK CHALLENGES</div><h1>Daily <span>quests.</span></h1><p>Open boxes, collect rewards, and keep the good times rolling.</p></div></div><div class="quest-list" id="quest-list"></div><button class="back-home" data-view="home">← BACK TO BOX STATION</button></div>
+      </section>
+    </main>
+    <footer class="mobile-nav"><button class="active" data-view="home"><span>▣</span>Boxes</button><button data-view="collection"><span>♟</span>Brawlers</button><button data-view="quests"><span>⚑</span>Quests</button></footer>
+  </div>
+  <div class="modal-backdrop hidden" id="modal-backdrop"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title"><button class="modal-close" id="modal-close" aria-label="Close">×</button><div class="modal-eyebrow">BOX BRAWL GUIDE</div><h2 id="modal-title">Drop rates</h2><p class="modal-intro">Every box has a different mix of goodies. The percentages below are per reward slot.</p><div class="odds-list" id="odds-list"></div><div class="pity-note"><span>✦</span><p><b>Legendary luck:</b> Each box gives you a little extra luck. At 30 luck, your next eligible drop is guaranteed legendary. A legendary resets your luck.</p></div><button class="modal-done" id="modal-done">GOT IT!</button></div></div>
+  <div class="toast" id="toast" role="status"></div>
+  <div class="reveal-overlay hidden" id="reveal-overlay"><div class="reveal-rays"></div><div class="reveal-content"><div class="reveal-kicker" id="reveal-kicker">BOX OPENED!</div><div class="reveal-title" id="reveal-title">NICE HAUL!</div><div class="reveal-items" id="reveal-items"></div><button id="reveal-close" class="reveal-continue">AWESOME <span>→</span></button><div class="reveal-hint">TAP ANYWHERE TO CONTINUE</div></div></div>
+  <script src="game.js"></script>
+</body>
+</html>
