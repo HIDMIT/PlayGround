@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#070a12" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%2383f4e3'/%3E%3Ctext x='32' y='46' text-anchor='middle' font-size='48' fill='%230b1019'%3E%E2%9C%B3%3C/text%3E%3C/svg%3E" />
+  <title>STARFALL — космический кликер</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#home" aria-label="Starfall главная">
+        <span class="brand-mark">✳</span><span>STARFALL<span class="brand-dot">.</span></span>
+      </a>
+      <div class="pilot-card">
+        <div class="pilot-avatar">✦</div>
+        <div><small>ПИЛОТ</small><strong>Командор</strong></div>
+        <span class="online-dot"></span>
+      </div>
+      <div class="nav-label">КОСМОС</div>
+      <nav class="main-nav" aria-label="Главная навигация">
+        <button class="nav-item active" data-view="home"><span class="nav-icon">⌂</span>Главная</button>
+        <button class="nav-item" data-view="upgrades"><span class="nav-icon">⌁</span>Прокачка <span class="nav-count" id="upgrade-nav-count">3</span></button>
+        <button class="nav-item" data-view="pass"><span class="nav-icon">▤</span>Боевой пропуск</button>
+        <button class="nav-item" data-view="events"><span class="nav-icon">◈</span>События <span class="live-tag">LIVE</span></button>
+        <button class="nav-item" data-view="shop"><span class="nav-icon">▣</span>Магазин</button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="season-mini"><div class="season-icon">☄</div><div><small>СЕЗОН 04</small><strong>Зов туманности</strong></div><span>↗</span></div>
+        <div class="sidebar-foot"><span class="online-dot"></span>Система стабильна <span class="version">v.04.28</span></div>
+      </div>
+    </aside>
+
+    <main class="main-area">
+      <header class="topbar">
+        <div class="breadcrumb"><span>СЕКТОР 07</span><b>/</b><strong id="page-title">ГЛАВНАЯ</strong></div>
+        <div class="top-right">
+          <div class="resource-chip"><span class="resource-icon energy-icon">ϟ</span><strong id="top-energy">0</strong><small>энергия</small></div>
+          <div class="resource-chip"><span class="resource-icon crystal-icon">◆</span><strong id="top-crystals">0</strong><small>кристаллы</small></div>
+          <button class="profile-button" title="Профиль">К<span class="profile-level" id="pilot-level">1</span></button>
+        </div>
+      </header>
+
+      <div class="content-wrap">
+        <section class="view active" id="view-home">
+          <div class="welcome-row"><div><div class="eyebrow"><span class="eyebrow-line"></span>ЦЕНТР УПРАВЛЕНИЯ <span class="eyebrow-muted">· 14:32 UTC</span></div><h1>Покоряй <span>неизведанное.</span></h1><p class="subtitle">Каждый клик приближает тебя к новой галактике.</p></div><button class="icon-button" id="sound-toggle" aria-label="Звук">♫</button></div>
+          <div class="dashboard-grid">
+            <div class="primary-column">
+              <section class="ship-card panel">
+                <div class="card-topline"><div class="ship-name"><span class="status-pulse"></span><span>ТВОЙ КОРАБЛЬ</span><i>·</i><b>ORION MK-II</b></div><span class="ship-condition">СИСТЕМЫ В НОРМЕ <span>↗</span></span></div>
+                <div class="ship-scene" id="ship-scene" aria-label="Кликните по кораблю, чтобы добывать энергию">
+                  <div class="scene-glow"></div><div class="planet planet-back"></div><div class="planet planet-front"></div>
+                  <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+                  <div class="ship-wrap" id="ship-button" role="button" tabindex="0" aria-label="Добыть энергию">
+                    <div class="ship-aura"></div>
+                    <svg class="ship-art" viewBox="0 0 300 210" role="img" aria-label="Космический корабль Orion">
+                      <defs><linearGradient id="hull" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f3fcff"/><stop offset=".48" stop-color="#92d7ee"/><stop offset="1" stop-color="#5088b2"/></linearGradient><linearGradient id="wing" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#bdefff"/><stop offset="1" stop-color="#537fbd"/></linearGradient><linearGradient id="engine" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fff5c3"/><stop offset="1" stop-color="#6cfff0"/></linearGradient></defs>
+                      <path d="M147 24c-23 27-43 74-43 116 0 17 20 31 46 32 27-1 48-15 48-32 0-42-21-89-44-116a5 5 0 0 0-7 0Z" fill="url(#hull)" stroke="#d7f8ff" stroke-width="2"/>
+                      <path d="m107 105-48 38-14 40 65-19 18-34M193 105l48 38 14 40-65-19-18-34" fill="url(#wing)" stroke="#c2f4ff" stroke-width="2"/>
+                      <path d="M133 80c4-17 11-27 17-34 7 9 13 19 17 34-9 7-25 7-34 0Z" fill="#8cf3ff" stroke="#e9ffff" stroke-width="2"/>
+                      <path d="M124 154h51l-7 27h-37z" fill="#253d69"/><path d="M132 177h12l-4 24h-8zM159 177h12l3 24h-8z" fill="url(#engine)"/>
+                      <path d="m70 157 27-8-4 14-27 9M230 157l-27-8 4 14 27 9" fill="#79fff0" opacity=".8"/>
+                      <path d="M148 110h4v22h-4z" fill="#fff" opacity=".8"/><circle cx="150" cy="143" r="3" fill="#fff"/>
+                    </svg>
+                    <div class="click-hint">НАЖМИ, ЧТОБЫ ДОБЫВАТЬ <span>✦</span></div>
+                  </div>
+                  <div class="scene-coordinate">N 04° 28' · ORION BELT</div><div class="scene-stars" aria-hidden="true"></div>
+                </div>
+                <div class="ship-stats"><div class="stat-block"><small>ДОБЫЧА ЗА КЛИК</small><strong>+<span id="click-power">1</span> <em>ϟ</em></strong></div><div class="stat-divider"></div><div class="stat-block"><small>АВТОДОБЫЧА</small><strong>+<span id="passive-rate">0</span> <em>ϟ/сек</em></strong></div><div class="stat-divider"></div><div class="stat-block"><small>УРОВЕНЬ КОРАБЛЯ</small><strong>MK-<span id="ship-level">II</span></strong></div><button class="ship-upgrade" data-view="upgrades">УЛУЧШИТЬ КОРАБЛЬ <span>↗</span></button></div>
+              </section>
+              <section class="mission-panel panel"><div class="section-heading"><div><div class="eyebrow">НА ЭТОЙ НЕДЕЛЕ</div><h2>Задания пилота</h2></div><button class="text-link" data-view="events">Все задания <span>↗</span></button></div><div class="mission-list" id="missions-list"></div></section>
+            </div>
+            <aside class="side-column">
+              <section class="season-card panel"><div class="season-bg-orb"></div><div class="season-top"><span>СЕЗОН 04 · 12 ДНЕЙ</span><span class="season-live"><i></i>АКТИВЕН</span></div><div class="season-art">✦</div><div class="season-card-content"><div class="eyebrow">ТЕКУЩИЙ ПРОПУСК</div><h2>Зов<br>туманности</h2><p>Новые миры. Новые награды.</p><div class="season-progress"><div class="progress-meta"><span>УРОВЕНЬ <b id="pass-level-small">1</b></span><span><b id="pass-xp-small">0</b> / 100 XP</span></div><div class="progress-track"><i id="pass-progress-small"></i></div></div><button class="season-cta" data-view="pass">ОТКРЫТЬ ПРОПУСК <span>→</span></button></div></section>
+              <section class="daily-card panel"><div class="section-heading"><div><div class="eyebrow">СОБЫТИЕ НЕДЕЛИ</div><h2>Осколки Ориона</h2></div><span class="event-glyph">✧</span></div><p>Собирай кристаллы в поясе астероидов и обменивай на редкие награды.</p><div class="event-meter"><div class="event-meter-head"><span>ОСКОЛКИ СОБРАНЫ</span><b><span id="event-shards">0</span> / 30</b></div><div class="progress-track"><i id="event-progress"></i></div></div><button class="event-button" data-view="events">В СОБЫТИЕ <span>↗</span></button></section>
+              <section class="tip-card"><span class="tip-star">✧</span><p><strong>Совет навигатора</strong><br>Кликни по кораблю или купи дрон — он будет добывать энергию, даже пока ты исследуешь магазин.</p></section>
+            </aside>
+          </div>
+        </section>
+
+        <section class="view" id="view-upgrades"><div class="page-heading"><div><div class="eyebrow">РАЗВИВАЙ СВОЙ ФЛОТ</div><h1>Прокачка</h1><p class="subtitle">Стань самым эффективным пилотом сектора.</p></div><div class="wallet-inline"><span>ϟ <b id="upgrade-energy">0</b></span><span>◆ <b id="upgrade-crystals">0</b></span></div></div><div class="upgrade-grid" id="upgrade-grid"></div></section>
+        <section class="view" id="view-pass"><div class="page-heading"><div><div class="eyebrow">СЕЗОН 04 · ЗОВ ТУМАННОСТИ</div><h1>Боевой пропуск</h1><p class="subtitle">Выполняй задания, получай XP и забирай награды.</p></div><div class="pass-badge">✦ <span>СЕЗОН АКТИВЕН</span></div></div><div class="pass-hero panel"><div><span class="pass-kicker">ГАЛАКТИКА ЖДЁТ</span><h2>Твоя история<br>только начинается.</h2><p>Каждые 100 XP открывают новую ступень пропуска.</p><div class="pass-total"><strong id="pass-total-level">01</strong><span>УРОВЕНЬ ПРОПУСКА</span></div></div><div class="pass-art">✺</div></div><div class="section-heading pass-rewards-heading"><div><div class="eyebrow">ПУТЬ НАГРАД</div><h2>Награды сезона</h2></div><span class="pass-xp-label"><b id="pass-xp-main">0</b> XP ДО СЛЕДУЮЩЕГО УРОВНЯ</span></div><div class="rewards-track" id="rewards-track"></div></section>
+        <section class="view" id="view-events"><div class="page-heading"><div><div class="eyebrow">ОГРАНИЧЕННОЕ ВРЕМЯ · 6 ДНЕЙ</div><h1>События</h1><p class="subtitle">Исследуй новые зоны и забирай эксклюзивные трофеи.</p></div><span class="event-live-pill"><i></i>2 СОБЫТИЯ АКТИВНЫ</span></div><div class="event-feature panel"><div class="event-feature-art"><div class="event-planet"></div><span class="event-comet">☄</span><div class="event-feature-label">СЕКТОР 07 · ОРИОН</div></div><div class="event-feature-info"><div class="eyebrow">ГЛОБАЛЬНОЕ СОБЫТИЕ <span class="event-live-text">· LIVE</span></div><h2>Осколки<br>Ориона</h2><p>В поясе Ориона обнаружены древние кристаллы. Собери их все, пока аномалия не исчезла.</p><div class="event-large-progress"><div class="event-meter-head"><span>ТВОЙ ПРОГРЕСС</span><b><span id="event-shards-large">0</span> / 30</b></div><div class="progress-track"><i id="event-progress-large"></i></div><small>Кристаллы падают за клики и задания</small></div><button class="primary-button" id="claim-event">ЗАБРАТЬ НАГРАДУ <span>◆ 30</span></button></div></div><div class="event-reward-row"><div class="event-reward-icon">✧</div><div><small>НАГРАДА СОБЫТИЯ</small><strong>Кристалл «Сингулярность»</strong></div><span class="reward-status" id="event-reward-status">30 ◆</span></div><div class="section-heading other-event-heading"><div><div class="eyebrow">ЕЩЁ В СЕКТОРЕ</div><h2>На горизонте</h2></div></div><div class="mini-event-grid"><div class="mini-event panel"><span class="mini-event-icon">◉</span><div><small>ЕЖЕДНЕВНОЕ</small><strong>Первые шаги</strong><p>Сделай 25 кликов по кораблю</p></div><span class="mini-event-reward">+50 ϟ</span></div><div class="mini-event panel"><span class="mini-event-icon purple">✦</span><div><small>ИССЛЕДОВАНИЕ</small><strong>На край галактики</strong><p>Накопи 500 энергии</p></div><span class="mini-event-reward">+20 XP</span></div></div></section>
+        <section class="view" id="view-shop"><div class="page-heading"><div><div class="eyebrow">СНАБЖЕНИЕ ФЛОТА</div><h1>Магазин</h1><p class="subtitle">Обменивай ресурсы на усиления и редкие предметы.</p></div><div class="wallet-inline"><span>ϟ <b id="shop-energy">0</b></span><span>◆ <b id="shop-crystals">0</b></span></div></div><div class="shop-banner panel"><div><div class="eyebrow">ПРЕДЛОЖЕНИЕ НЕДЕЛИ</div><h2>Пакет первооткрывателя</h2><p>Полезный запас энергии для начала экспедиции.</p><button class="primary-button" data-buy="starter">ОБМЕНЯТЬ <span>◆ 5</span></button></div><div class="starter-art">▰</div><span class="offer-tag">ВЫГОДА +20%</span></div><div class="section-heading shop-section-heading"><div><div class="eyebrow">ДОСТУПНО ПИЛОТУ</div><h2>Торговый терминал</h2></div></div><div class="shop-grid" id="shop-grid"></div></section>
+      </div>
+      <footer class="footer"><span>STARFALL COMMAND <b>·</b> ORION SECTOR</span><span>СОХРАНЕНИЕ АВТОМАТИЧЕСКОЕ <i>●</i></span></footer>
+    </main>
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+  <script src="app.js"></script>
+</body>
+</html>
