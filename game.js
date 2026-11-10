@@ -27,15 +27,22 @@
     {id:'collect2',title:'Growing roster',description:'Unlock 2 brawlers',goal:2,reward:65,icon:'♟',type:'unlocks'},
     {id:'starr1',title:'Reach for the stars',description:'Open 1 Starr Drop',goal:1,reward:55,icon:'✧',type:'starr'}
   ];
-  const freshState = () => ({coins:120,gems:20,opened:0,luck:0,best:'',owned:{},power:{},quests:{open3:0,collect2:0,starr1:0},claimed:{},recent:[],box:'mega'});
+  const dayKey = (date=new Date()) => `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
+  const freshState = () => ({coins:120,gems:20,opened:0,luck:0,best:'',owned:{},power:{},quests:{open3:0,collect2:0,starr1:0},claimed:{},recent:[],box:'mega',questDay:dayKey()});
   let state;
   try { state = {...freshState(),...JSON.parse(localStorage.getItem('box-brawl-save')||'{}')}; }
   catch { state = freshState(); }
   state.owned = state.owned || {}; state.power = state.power || {}; state.quests = {...freshState().quests,...(state.quests||{})}; state.claimed = state.claimed || {}; state.recent = state.recent || [];
+  if (!boxes.some(box=>box.id===state.box)) state.box='mega';
+  if (!state.questDay) state.questDay=dayKey();
+  const resetDailyQuests = () => {
+    state.quests={open3:0,collect2:0,starr1:0}; state.claimed={}; state.questDay=dayKey(); save();
+  };
   let isOpening = false;
   let toastTimer;
   const $ = id => document.getElementById(id);
   const save = () => { try { localStorage.setItem('box-brawl-save',JSON.stringify(state)); } catch {} };
+  if (state.questDay!==dayKey()) resetDailyQuests();
   const chosenBox = () => boxes.find(box=>box.id===state.box) || boxes[1];
   const rarityInfo = rarity => rarities[rarity] || {color:'#c5cbe0',bg:'#353d58'};
   const weightedPick = list => {
@@ -48,7 +55,14 @@
   const ownedCount = () => brawlers.filter(b=>state.owned[b.id]).length;
   const levelOf = id => 1 + Math.floor((state.power[id]||0)/100);
 
+  function updateQuestClock() {
+    const nextReset=new Date(); nextReset.setHours(24,0,0,0);
+    const minutes=Math.max(0,Math.floor((nextReset-Date.now())/60000));
+    const hours=Math.floor(minutes/60),remaining=minutes%60;
+    $('quest-reset').textContent=`RESETS IN ${String(hours).padStart(2,'0')}H ${String(remaining).padStart(2,'0')}M`;
+  }
   function render() {
+    updateQuestClock();
     $('coin-count').textContent = state.coins.toLocaleString();
     $('gem-count').textContent = state.gems.toLocaleString();
     $('boxes-opened').textContent = state.opened;
@@ -202,12 +216,13 @@
   $('modal-done').addEventListener('click',()=>$('modal-backdrop').classList.add('hidden'));
   $('modal-backdrop').addEventListener('click',e=>{if(e.target===$('modal-backdrop'))$('modal-backdrop').classList.add('hidden');});
   $('reveal-close').addEventListener('click',closeReveal);
-  $('reveal-overlay').addEventListener('click',e=>{if(e.target===$('reveal-overlay'))closeReveal();});
+  $('reveal-overlay').addEventListener('click',closeReveal);
   document.addEventListener('click',e=>{
     const nav=e.target.closest('[data-view]');if(nav){e.preventDefault();setView(nav.dataset.view);}
     const claim=e.target.closest('[data-claim]');if(claim)claimQuest(claim.dataset.claim);
     const toast=e.target.closest('[data-toast]');if(toast)showToast(toast.dataset.toast);
   });
+  document.querySelector('.avatar').addEventListener('click',()=>showToast(`Brawler profile · ${ownedCount()} of ${brawlers.length} collected`));
   $('quest-action').addEventListener('click',()=>{
     const q=questDefs[0];if(state.claimed[q.id])return;
     if((state.quests[q.id]||0)>=q.goal)claimQuest(q.id);else openBox();
@@ -217,5 +232,9 @@
     if(e.code==='Space' && !e.repeat && $('modal-backdrop').classList.contains('hidden') && $('reveal-overlay').classList.contains('hidden') && !e.target.matches('button,a,input')){e.preventDefault();openBox();}
     if(e.code==='Enter' && !$('reveal-overlay').classList.contains('hidden'))closeReveal();
   });
+  window.setInterval(()=>{
+    if(state.questDay!==dayKey()){resetDailyQuests();render();showToast('Daily quests have reset!');}
+    else updateQuestClock();
+  },60000);
   render();
 })();
